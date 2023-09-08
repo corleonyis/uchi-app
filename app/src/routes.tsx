@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
   {path: "/", element: <App/>},
   {path: "ShoppingList", element: <ShoppingList/>},
   {path: "StockList", element: <StockList/>},
-  {path: "Settings", element: <Settings/>},
+  {path: "Setting/Category", element: <Settings/>},
   {path: "Calendar", element: <Calendar/>},
   {path: "login", element: <Login/>}
 ])
