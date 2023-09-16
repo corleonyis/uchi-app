@@ -1,6 +1,7 @@
 import React, { useState} from "react"; 
 import { 
   AppShell,
+  ScrollArea,
   useMantineTheme
 } from "@mantine/core";
 import { UANavbar } from "./UANavbar";
@@ -24,7 +25,9 @@ export const UAAppShell: React.FC<Props> = ({children}) => {
       navbar={<UANavbar hidden={!opend}/>}
 
     >
-      {children}
+      <ScrollArea.Autosize p="xs" type="never">
+        {children}
+      </ScrollArea.Autosize>
     </AppShell>
   )
 }
