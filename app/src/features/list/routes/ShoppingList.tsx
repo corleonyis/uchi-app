@@ -14,17 +14,24 @@ export const ShoppingList: React.FC = () => {
   // アイテム追加
   const addItem = (title: string) => {
     setListItems((prevItems) => {
-      return [...prevItems, {title: title, done: false}]
+      return [...prevItems, {id:listItems.length, title: title, done: false}]
     })
   }
 
   // リストアイテム生成
   const buyList = listItems.map((item) => (
-    <UAListItem text={item.title}/>
+    <UAListItem text={item.title} key={item.id}/>
   ))
 
   // Modal
   const [opened, { open, close }] = useDisclosure(false);
+  const register = () => {
+    addItem(`Add Item No.${listItems.length} by Modal`)
+    close()
+  }
+  const cancel = () => {
+    close()
+  }
 
   return (
     <MantineProvider>
@@ -38,8 +45,8 @@ export const ShoppingList: React.FC = () => {
                 align="center"
                 gap="sm"
               >
-                <Button onClick={close} color="gray">キャンセル</Button>
-                <Button onClick={close}>登録</Button>
+                <Button onClick={cancel} color="gray">キャンセル</Button>
+                <Button onClick={register}>登録</Button>
               </Flex>
             </Stack>
           </UAModal>
@@ -49,7 +56,7 @@ export const ShoppingList: React.FC = () => {
               <Stack justify="flex-start" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] })}>
                 {buyList}
                 <Divider/>
-                <UnstyledButton onClick={() => addItem("Add Item")}>
+                <UnstyledButton onClick={open}>
                   <Paper p="xs" withBorder>
                     <Flex
                       justify="center"
