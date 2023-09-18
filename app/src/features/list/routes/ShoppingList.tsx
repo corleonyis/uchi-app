@@ -4,7 +4,7 @@ import { UAAppShell } from "../../../components/UAAppShell";
 import { UAListItem } from "../ components/UAList";
 import { ShoppingListType } from "../ components/Type";
 import { useDisclosure } from "@mantine/hooks";
-import { UAModal } from "../ components/UAModla";
+import { UAModal } from "../ components/UAModal";
 
 export const ShoppingList: React.FC = () => {
   const theme = useMantineTheme()
