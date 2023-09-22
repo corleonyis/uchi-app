@@ -25,11 +25,14 @@ export const ShoppingList: React.FC = () => {
 
   // Modal
   const [opened, { open, close }] = useDisclosure(false);
+  const [newTitle, setNewTitle] = useState("")
   const register = () => {
-    addItem(`Add Item No.${listItems.length} by Modal`)
+    addItem(newTitle)
+    setNewTitle("")
     close()
   }
   const cancel = () => {
+    setNewTitle("")
     close()
   }
 
@@ -37,9 +40,9 @@ export const ShoppingList: React.FC = () => {
     <MantineProvider>
       <UAAppShell>
           <UAModal title="アイテムを追加" opened={opened} close={close}>
-            <Stack>
-              <Text>アイテム名</Text>
-              <TextInput></TextInput>
+            <Stack justify="flex-start" spacing={"xs"}>
+              {/* <Text>アイテム名</Text> */}
+              <TextInput label="アイテム名" value={newTitle} onChange={(event) => setNewTitle(event.currentTarget.value)}/>
               <Flex
                 justify={"flex-end"}
                 align="center"
