@@ -2,7 +2,9 @@ import React from "react";
 import { Paper, Text, Checkbox, Flex } from "@mantine/core";
 
 type Props = {
+  id: number,
   text: String,
+  changeEvent: (id: number, checked: boolean) => void
 };
 
 export const UAList: React.FC<Props> = ({ text }) => {
@@ -13,7 +15,7 @@ export const UAList: React.FC<Props> = ({ text }) => {
   );
 };
 
-export const UAListItem: React.FC<Props> = ({ text }) => {
+export const UAListItem: React.FC<Props> = ({ id, text, changeEvent }) => {
   return (
     <Paper p="md" withBorder>
       <Flex
@@ -23,7 +25,7 @@ export const UAListItem: React.FC<Props> = ({ text }) => {
         direction="row"
         wrap="wrap"
       >
-        <Checkbox/>
+        <Checkbox onChange={(event) => {changeEvent(id, event.currentTarget.checked)}}/>
         <Text>{text}</Text>
       </Flex>
     </Paper>

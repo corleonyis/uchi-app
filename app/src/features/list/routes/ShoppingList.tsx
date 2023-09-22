@@ -17,10 +17,25 @@ export const ShoppingList: React.FC = () => {
       return [...prevItems, {id:listItems.length, title: title, done: false}]
     })
   }
+  // チェック状態の更新
+  const updateDone = (id: number, checked: boolean) => {
+    setListItems((prevItems) => {
+      return prevItems.map((item) => {
+        if(item.id == id){
+          item.done = checked
+        }
+        return item
+      })
+    })
+  }
+  // チェック済みアイテムの削除
+  const deleteItem = () => {
+    setListItems(listItems.filter((item) => item.done === false))
+  }
 
   // リストアイテム生成
   const buyList = listItems.map((item) => (
-    <UAListItem text={item.title} key={item.id}/>
+    <UAListItem key={item.id} id={item.id} text={item.title} changeEvent={updateDone}/>
   ))
 
   // Modal
@@ -71,7 +86,7 @@ export const ShoppingList: React.FC = () => {
                     </Flex>
                   </Paper>
                 </UnstyledButton>
-                <UnstyledButton onClick={() => {}}>
+                <UnstyledButton onClick={deleteItem}>
                   <Paper p="xs" withBorder>
                     <Flex
                       justify="center"
