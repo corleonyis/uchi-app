@@ -15,6 +15,7 @@ jobs:
         working-directory: app
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          entrypoint: ./app
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_UCHIAPP_CB897 }}'
           projectId: uchiapp-cb897
