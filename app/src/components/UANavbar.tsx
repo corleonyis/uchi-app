@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navbar, ScrollArea, Divider, Text, Avatar, Flex, Accordion, Box, NavLink } from "@mantine/core";
+import { Navbar, ScrollArea, Divider, Text, Avatar, Flex, Accordion, NavLink } from "@mantine/core";
 
 type Props = {
   hidden: boolean

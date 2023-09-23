@@ -1,14 +1,12 @@
-import React, { useRef, useState } from "react";
-import { MantineProvider, useMantineTheme, Paper, Stack, UnstyledButton, Text, Flex, Divider, TextInput, Button, Center } from "@mantine/core";
+import React, { useState } from "react";
+import { MantineProvider, Paper, Stack, UnstyledButton, Text, Flex, Divider, TextInput, Button } from "@mantine/core";
 import { UAAppShell } from "../../../components/UAAppShell";
-import { UAListItem } from "../ components/UAList";
-import { ShoppingListType } from "../ components/Type";
+import { UAListItem } from "../components/UAList";
+import { ShoppingListType } from "../components/Type";
 import { useDisclosure } from "@mantine/hooks";
-import { UAModal } from "../ components/UAModal";
+import { UAModal } from "../components/UAModal";
 
 export const ShoppingList: React.FC = () => {
-  const theme = useMantineTheme()
-
   // 購入リスト
   const [listItems, setListItems] = useState<ShoppingListType[]>([])
   // アイテム追加
@@ -21,7 +19,7 @@ export const ShoppingList: React.FC = () => {
   const updateDone = (id: number, checked: boolean) => {
     setListItems((prevItems) => {
       return prevItems.map((item) => {
-        if(item.id == id){
+        if(item.id === id){
           item.done = checked
         }
         return item

@@ -1,5 +1,4 @@
-import { useDisclosure } from '@mantine/hooks';
-import { Modal, Text } from '@mantine/core';
+import { Modal } from '@mantine/core';
 import React from 'react';
 
 type Props = {
