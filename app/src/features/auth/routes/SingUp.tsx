@@ -4,9 +4,11 @@ import { AuthContext } from "../components/Auth"
 import { useContext } from "react"
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { auth, provider } from "../../firebase/firebase"
+import { redirect, useNavigate } from "react-router-dom"
 
 export const SignUp:React.FC = () => {
   const {setUser} = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const signUp = () => {
     signInWithPopup(auth, provider)
@@ -15,8 +17,9 @@ export const SignUp:React.FC = () => {
         // const credential = GoogleAuthProvider.credentialFromResult(result);
         // const token = credential?.accessToken;
         // The signed-in user info.
-        setUser(result.user)
         console.log(result.user)
+        setUser(result.user)
+        navigate("/lists/buy")
       }).catch((error) => {
         console.log(error)
       })
