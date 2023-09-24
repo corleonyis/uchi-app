@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routes';
+import { MantineProvider } from "@mantine/core";
 
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
@@ -32,7 +33,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <MantineProvider>
+      <RouterProvider router={router}/>
+    </MantineProvider>
   </React.StrictMode>
 );
 

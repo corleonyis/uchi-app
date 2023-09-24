@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MantineProvider, Paper, Stack, UnstyledButton, Text, Flex, Divider, TextInput, Button } from "@mantine/core";
+import { Paper, Stack, UnstyledButton, Text, Flex, Divider, TextInput, Button } from "@mantine/core";
 import { UAAppShell } from "../../../components/UAAppShell";
 import { UAListItem } from "../components/UAList";
 import { ShoppingListType } from "../components/Type";
@@ -50,79 +50,77 @@ export const ShoppingList: React.FC = () => {
   }
 
   return (
-    <MantineProvider>
-      <UAAppShell>
-          <UAModal title="アイテムを追加" opened={opened} close={close}>
-            <Stack justify="flex-start" spacing={"xs"}>
-              {/* <Text>アイテム名</Text> */}
-              <TextInput label="アイテム名" value={newTitle} onChange={(event) => setNewTitle(event.currentTarget.value)}/>
-              <Flex
-                justify={"flex-end"}
-                align="center"
-                gap="sm"
-              >
-                <Button onClick={cancel} color="gray">キャンセル</Button>
-                <Button onClick={register}>登録</Button>
-              </Flex>
-            </Stack>
-          </UAModal>
-          {
-            listItems.length > 0 
-            ? // 買い物リストにアイテムがある時
-              <Stack justify="flex-start" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] })}>
-                {buyList}
-                <Divider/>
-                <UnstyledButton onClick={open}>
-                  <Paper p="xs" withBorder>
-                    <Flex
-                      justify="center"
-                      align="center"
-                      direction="row"
-                      wrap="wrap"
-                    >
-                      <Text>新しいアイテムを追加する</Text>
-                    </Flex>
-                  </Paper>
-                </UnstyledButton>
-                <UnstyledButton onClick={deleteItem}>
-                  <Paper p="xs" withBorder>
-                    <Flex
-                      justify="center"
-                      align="center"
-                      direction="row"
-                      wrap="wrap"
-                    >
-                      <Text color="red">チェック済みのアイテムを削除する</Text>
-                    </Flex>
-                  </Paper>
-                </UnstyledButton>
-              </Stack>  
-            : // 買い物リストが空の時
+    <UAAppShell>
+        <UAModal title="アイテムを追加" opened={opened} close={close}>
+          <Stack justify="flex-start" spacing={"xs"}>
+            {/* <Text>アイテム名</Text> */}
+            <TextInput label="アイテム名" value={newTitle} onChange={(event) => setNewTitle(event.currentTarget.value)}/>
+            <Flex
+              justify={"flex-end"}
+              align="center"
+              gap="sm"
+            >
+              <Button onClick={cancel} color="gray">キャンセル</Button>
+              <Button onClick={register}>登録</Button>
+            </Flex>
+          </Stack>
+        </UAModal>
+        {
+          listItems.length > 0 
+          ? // 買い物リストにアイテムがある時
             <Stack justify="flex-start" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] })}>
-                <Flex
-                  justify="center"
-                  align="center"
-                  direction="row"
-                  wrap="wrap"
-                >
-                  <Text>買い物リストは空です。</Text>
-                </Flex>
-                <Divider/>
-                <UnstyledButton onClick={open}>
-                  <Paper p="xs" withBorder>
-                    <Flex
-                      justify="center"
-                      align="center"
-                      direction="row"
-                      wrap="wrap"
-                    >
-                      <Text>新しいアイテムを追加する</Text>
-                    </Flex>
-                  </Paper>
-                </UnstyledButton>
-            </Stack>
-          }
-      </UAAppShell>
-    </MantineProvider>
+              {buyList}
+              <Divider/>
+              <UnstyledButton onClick={open}>
+                <Paper p="xs" withBorder>
+                  <Flex
+                    justify="center"
+                    align="center"
+                    direction="row"
+                    wrap="wrap"
+                  >
+                    <Text>新しいアイテムを追加する</Text>
+                  </Flex>
+                </Paper>
+              </UnstyledButton>
+              <UnstyledButton onClick={deleteItem}>
+                <Paper p="xs" withBorder>
+                  <Flex
+                    justify="center"
+                    align="center"
+                    direction="row"
+                    wrap="wrap"
+                  >
+                    <Text color="red">チェック済みのアイテムを削除する</Text>
+                  </Flex>
+                </Paper>
+              </UnstyledButton>
+            </Stack>  
+          : // 買い物リストが空の時
+          <Stack justify="flex-start" sx={(theme) => ({ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] })}>
+              <Flex
+                justify="center"
+                align="center"
+                direction="row"
+                wrap="wrap"
+              >
+                <Text>買い物リストは空です。</Text>
+              </Flex>
+              <Divider/>
+              <UnstyledButton onClick={open}>
+                <Paper p="xs" withBorder>
+                  <Flex
+                    justify="center"
+                    align="center"
+                    direction="row"
+                    wrap="wrap"
+                  >
+                    <Text>新しいアイテムを追加する</Text>
+                  </Flex>
+                </Paper>
+              </UnstyledButton>
+          </Stack>
+        }
+    </UAAppShell>
   );
 };
