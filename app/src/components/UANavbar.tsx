@@ -7,14 +7,14 @@ type Props = {
 }
 
 const lsitData = [
-  { label: "ShoppingList", href: "/ShoppingList" },
-  { label: "StockList", href: "/StockList" }
+  { label: "ShoppingList", href: "/lists/buy" },
+  { label: "StockList", href: "/lists/stock" }
 ]
 const scheduleData = [
-  { label: "Calendar", href: "/Calendar" }
+  { label: "Calendar", href: "/calendar" }
 ]
 const settingData = [
-  { label: "Category", href: "/Setting/Category"}
+  { label: "Category", href: "/setting/category"}
 ]
 
 export const UANavbar: React.FC<Props> = ({hidden}) => {
