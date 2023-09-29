@@ -13,6 +13,8 @@ jobs:
       - uses: actions/checkout@v3
       - run: yarn install
         working-directory: app
+      - run: echo "${{ secrets.ENV_PRD }}" > .env
+        working-directory: app
       - run: yarn build
         working-directory: app
       - uses: FirebaseExtended/action-hosting-deploy@v0
