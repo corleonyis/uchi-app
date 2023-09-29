@@ -36,7 +36,8 @@ export const app = initializeApp(firebaseConfig)
 // }
 
 export const provider = new GoogleAuthProvider()
-export const auth = getAuth(app)
+const auth = getAuth(app)
+export default auth
 // export const useFirebaseAuth = () => {
 //   const [auth, setAuth] = useState<Auth>()
 //   const [initialized, setInitialized] = useState(false)

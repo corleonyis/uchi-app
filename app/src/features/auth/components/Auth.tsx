@@ -5,7 +5,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth, provider } from "../../firebase/firebase";
+import auth, { provider } from "../../firebase/firebase";
 import { NavigateFunction } from "react-router-dom";
 
 export type AuthContextType = {
