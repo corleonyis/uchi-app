@@ -18,5 +18,39 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
+// export const useFirebase = () => {
+//   const [app, setApp] = useState<FirebaseApp>()
+//   const [initialized, setInitialized] = useState(false)
+
+//   useEffect(() => {
+//     if(initialized){
+//       return
+//     }
+
+//     console.log("intialize app")
+//     setApp(initializeApp(firebaseConfig))
+//     setInitialized(true)
+//   }, [initialized])
+
+//   return app
+// }
+
 export const provider = new GoogleAuthProvider()
 export const auth = getAuth(app)
+// export const useFirebaseAuth = () => {
+//   const [auth, setAuth] = useState<Auth>()
+//   const [initialized, setInitialized] = useState(false)
+//   const app = useFirebase()
+  
+//   useEffect(() => {
+//     if(initialized){
+//       return
+//     }
+
+//     console.log("intialize auth")
+//     setAuth(getAuth(app))
+//     setInitialized(true)
+//   }, [initialized])
+
+//   return auth
+// }

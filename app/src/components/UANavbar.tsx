@@ -1,6 +1,9 @@
-import React, { useContext, useState } from "react";
-import { Navbar, ScrollArea, Divider, Text, Avatar, Flex, Accordion, NavLink } from "@mantine/core";
-import { AuthContext } from "../features/auth/components/Auth";
+import React, { useState } from "react";
+import { Navbar, ScrollArea, Divider, Text, Avatar, Flex, Accordion, NavLink, Container } from "@mantine/core";
+import { AiOutlineEllipsis } from "react-icons/ai"
+import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../features/auth/components/Auth";
+// import { auth } from "../features/firebase/firebase";
 
 type Props = {
   hidden: boolean
@@ -72,8 +75,9 @@ export const UANavbar: React.FC<Props> = ({hidden}) => {
     />
   ))
 
-  // auth 
-  const authContextValue = useContext(AuthContext)
+  // navigate
+  const navigate = useNavigate()
+  const { currentUser, logout} = useAuthContext()
 
   return(
     <Navbar p="md" width={{sm: 200, lg: 300}} hiddenBreakpoint="sm" hidden={hidden}>
@@ -108,10 +112,15 @@ export const UANavbar: React.FC<Props> = ({hidden}) => {
       
       {/* Footer */}
       <Navbar.Section> 
-          <Flex align="center" gap="md">
-            <Avatar src={authContextValue.user?.photoURL} radius="xl"/>
-            <Text>{authContextValue.user?.displayName}</Text>
+        <Container fluid p={0} onClick={ () => {
+          logout(navigate)
+        }}>
+          <Flex justify={"flex-start"} align={"center"} gap={"md"}>
+            <Avatar src={currentUser?.photoURL} radius="xl"/>
+            <Text lineClamp={1}>{currentUser?.displayName}</Text>
+            <AiOutlineEllipsis style={{marginLeft: "auto"}}/>
           </Flex>
+        </Container>
       </Navbar.Section>
     </Navbar>
   )

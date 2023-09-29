@@ -1,4 +1,4 @@
-import React, { useContext, useState} from "react"; 
+import React, { useState} from "react"; 
 import { 
   AppShell,
   ScrollArea,
@@ -6,7 +6,7 @@ import {
 } from "@mantine/core";
 import { UANavbar } from "./UANavbar";
 import { UAHeader } from "./UAHeader";
-import { useAuth } from "../features/auth/components/Auth";
+import { useAuthContext } from "../features/auth/components/Auth";
 import { Navigate } from "react-router-dom";
 
 type Props = {
@@ -14,13 +14,13 @@ type Props = {
 }
 
 export const UAAppShell: React.FC<Props> = ({children}) => {
-  const user = useAuth()
+  const { currentUser } = useAuthContext()
   const theme = useMantineTheme()
   const [opend, setOpend] = useState(false)
 
-  console.log(user)
+  console.log(currentUser)
   return(
-    user ? 
+    currentUser ? 
     <AppShell
       styles={(theme) => ({
         main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
