@@ -10,63 +10,32 @@ import auth, { provider } from "../../firebase/firebase";
 import { NavigateFunction } from "react-router-dom";
 
 type AuthContextType = {
-  currentUser: User | null
-  login: (navigate: NavigateFunction) => void
-  logout: (navigate: NavigateFunction) => void
-}
+  currentUser: User | null;
+};
 
-const AuthContext = createContext<AuthContextType>(
-  {
-    currentUser: null,
-    login: () => {},
-    logout: () => {}
-  }
-)
+const AuthContext = createContext<AuthContextType>({
+  currentUser: null,
+});
 
-export const useAuthContext = () => useContext(AuthContext)
+export const useAuthContext = () => useContext(AuthContext);
 
 // AuthProvider
 type AuthProviderProps = {
   children: React.ReactNode;
 };
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
     return onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user)
-      setLoading(false)
-    })  
-  }, [])
-  
-  const login = (navigate: NavigateFunction) => {
-    setPersistence(auth, browserLocalPersistence).then(() => {
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          // const credential = GoogleAuthProvider.credentialFromResult(result);
-          // const token = credential?.accessToken;
-          // The signed-in user info.
-          navigate("/lists/buy")  
-        })
-      .catch((error) => {
-        console.log(error)
-      })
-    }).catch((error) => {
-      console.log(error)
-    })
-  }
-
-  const logout = (navigate: NavigateFunction) => {
-    auth?.signOut()
-    navigate("/login")
-  }
+      setCurrentUser(user);
+      setLoading(false);
+    });
+  }, []);
 
   const value = {
     currentUser,
-    login,
-    logout
   };
 
   return (
@@ -74,4 +43,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       {!loading && children}
     </AuthContext.Provider>
   );
-}
+};
+
+export const login = (navigate: NavigateFunction) => {
+  setPersistence(auth, browserLocalPersistence)
+    .then(() => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          // const credential = GoogleAuthProvider.credentialFromResult(result);
+          // const token = credential?.accessToken;
+          // The signed-in user info.
+          navigate("/lists/buy");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const logout = (navigate: NavigateFunction) => {
+  auth?.signOut();
+  navigate("/login");
+};
