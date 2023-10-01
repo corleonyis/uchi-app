@@ -8,6 +8,7 @@ import {
 import { createContext, useContext, useLayoutEffect, useState } from "react";
 import auth, { provider } from "../../firebase/firebase";
 import { NavigateFunction } from "react-router-dom";
+import { routesConfig } from "../../list/components/RouteConfig";
 
 type AuthContextType = {
   currentUser: User | null;
@@ -54,7 +55,7 @@ export const login = (navigate: NavigateFunction) => {
           // const credential = GoogleAuthProvider.credentialFromResult(result);
           // const token = credential?.accessToken;
           // The signed-in user info.
-          navigate("/lists/buy");
+          navigate(routesConfig.home.href);
         })
         .catch((error) => {
           console.log(error);
@@ -67,5 +68,5 @@ export const login = (navigate: NavigateFunction) => {
 
 export const logout = (navigate: NavigateFunction) => {
   auth?.signOut();
-  navigate("/login");
+  navigate(routesConfig.login.href);
 };

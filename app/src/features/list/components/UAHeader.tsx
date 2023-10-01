@@ -26,7 +26,7 @@ export const UAHeader: React.FC<Props> = ({opend, color, onClickEvent}) => {
           />
         </MediaQuery>
 
-      <Text>Uchi App</Text>
+      <Text size={"xl"}>Uchi App</Text>
 
       </div>
     </Header>
