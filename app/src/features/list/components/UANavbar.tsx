@@ -34,6 +34,7 @@ export const UANavbar: React.FC<Props> = ({ hidden }) => {
   const menuItems = menu.map((item, index) => {
     return (
       <UnstyledButton
+        p={10}
         onClick={() => {
           navigate(item.href);
         }}
@@ -64,10 +65,10 @@ export const UANavbar: React.FC<Props> = ({ hidden }) => {
       <Navbar.Section>
         <Stack>
           <UnstyledButton
+            p={10}
             onClick={() => {
               logout(navigate);
             }}
-            style={{ width: "auto" }}
           >
             <Flex justify={"flex-start"} align={"center"} gap={"md"}>
               <Avatar src={currentUser?.photoURL} radius="xl" />
