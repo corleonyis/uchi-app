@@ -2,7 +2,7 @@ import { Flex, Title, Button, Center, Stack, Paper } from "@mantine/core";
 import { FcGoogle } from "react-icons/fc";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuthContext, login } from "../components/Auth";
-import { routesConfig } from "../../list/components/RouteConfig";
+import { routesConfig } from "../../../routes/RouteConfig";
 
 export const Login: React.FC = () => {
   const { currentUser } = useAuthContext();

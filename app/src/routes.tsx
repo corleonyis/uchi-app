@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { UAAppShell } from "./features/list/components/UAAppShell";
-import { routesConfig } from "./features/list/components/RouteConfig";
+import { routesConfig } from "./routes/RouteConfig";
+import { UAAppShell } from "./components/UAAppShell";
 
 export const AppRouter: React.FC = () => {
   return (

@@ -8,7 +8,7 @@ import {
 import { createContext, useContext, useLayoutEffect, useState } from "react";
 import auth, { provider } from "../../firebase/firebase";
 import { NavigateFunction } from "react-router-dom";
-import { routesConfig } from "../../list/components/RouteConfig";
+import { routesConfig } from "../../../routes/RouteConfig";
 
 type AuthContextType = {
   currentUser: User | null;

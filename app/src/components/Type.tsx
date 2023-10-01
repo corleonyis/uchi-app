@@ -3,3 +3,7 @@ export type ShoppingListType = {
   title: string,
   done: boolean,
 }
+
+export type GroupItemType = {
+  name: string
+}
