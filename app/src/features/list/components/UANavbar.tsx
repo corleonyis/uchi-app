@@ -71,7 +71,7 @@ export const UANavbar: React.FC<Props> = ({ hidden }) => {
           >
             <Flex justify={"flex-start"} align={"center"} gap={"md"}>
               <Avatar src={currentUser?.photoURL} radius="xl" />
-              <Text lineClamp={1}>{currentUser?.displayName}</Text>
+              <Text lineClamp={1} size={"sm"}>{currentUser?.displayName}</Text>
               <AiOutlineEllipsis style={{ marginLeft: "auto" }} size={24} />
             </Flex>
           </UnstyledButton>
