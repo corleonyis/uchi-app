@@ -4,18 +4,22 @@ import {
   SimpleGrid,
   Flex,
   Stack,
-  Button,
   Divider,
+  UnstyledButton,
+  TextInput,
 } from "@mantine/core";
 import { useState } from "react";
 import { GroupItemType } from "../../../components/Type";
+import { UAModal } from "../../../components/UAModal";
+import { useDisclosure } from "@mantine/hooks";
 
+// 所属グループの表示
 type GroupItemProps = {
   items: GroupItemType[];
 };
 const GroupItem: React.FC<GroupItemProps> = ({ items }) => {
   const element = items.map((item, index) => (
-    <Paper shadow="xs" withBorder p={"xl"} key={index}>
+    <Paper key={index} shadow="xs" withBorder radius={10} p={"xl"}>
       <Text>{item.name}</Text>
     </Paper>
   ));
@@ -38,6 +42,19 @@ const GroupItem: React.FC<GroupItemProps> = ({ items }) => {
   );
 };
 
+// グループの操作に関するモーダル
+type GroupModalProps = {
+  opend: boolean,
+  close: () => void
+}
+const GroupModal: React.FC<GroupModalProps> = ({opend, close}) => {
+  return (
+    <UAModal title="グループの新規作成" opened={opend} close={close}>
+      <TextInput label="グループ名" />
+    </UAModal>
+  )
+}
+
 export const Group: React.FC = () => {
   const [group, setGroup] = useState<GroupItemType[]>([
     { name: "Name is A" },
@@ -46,13 +63,19 @@ export const Group: React.FC = () => {
     { name: "Name is D" },
     { name: "Name is E" },
   ]);
+
+  const [opend, {open, close}] = useDisclosure(false)
+
   return (
     <Stack>
-      <Flex justify={"flex-start"} align={"end"} gap={"md"}>
-        <Text>グループ</Text>
-        <Button variant="default" style={{ marginLeft: "auto" }}>
-          新しいグループを作成・グループに参加
-        </Button>
+      <GroupModal opend={opend} close={close}/>
+      <Flex justify={"flex-start"} align={"end"} gap={"sm"}>
+        <Text size={"lg"}>グループ</Text>
+        <UnstyledButton style={{ marginLeft: "auto" }} onClick={open}>
+          <Paper withBorder radius={10} p={5} color="undefined">
+            <Text p={5}>新しいグループを作成</Text>
+          </Paper>
+        </UnstyledButton>
       </Flex>
       <Divider />
       <GroupItem items={group} />
