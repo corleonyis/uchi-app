@@ -1,22 +1,34 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Login } from "./features/auth/routes/Login";
-import { ShoppingList } from "./features/list/routes/ShoppingList";
-import { StockList } from "./features/list/routes/StockList";
-import { Settings } from "./features/list/routes/Settings";
-import { Calendar } from "./features/list/routes/Calendar";
-import { UAAppShell } from "./components/UAAppShell";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { UAAppShell } from "./features/list/components/UAAppShell";
+import { routesConfig } from "./features/list/components/RouteConfig";
 
 export const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route
+          path={routesConfig.login.href}
+          element={routesConfig.login.element}
+        />
         <Route path="/" element={<UAAppShell />}>
-          <Route path="/lists/buy" element={<ShoppingList />} />
-          <Route path="/lists/stock" element={<StockList />} />
-          <Route path="/setting/category" element={<Settings />} />
-          <Route path="/calendar" element={<Calendar />} />
+          <Route index element={<Navigate to={routesConfig.home.href} />} />
+          <Route
+            path={routesConfig.home.href}
+            element={routesConfig.home.element}
+          />
+          <Route
+            path={routesConfig.buy_list.href}
+            element={routesConfig.buy_list.element}
+          />
+          <Route
+            path={routesConfig.stock.href}
+            element={routesConfig.stock.element}
+          />
+          <Route
+            path={routesConfig.settings.href}
+            element={routesConfig.settings.element}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
