@@ -6,12 +6,11 @@ import {
   Stack,
   Divider,
   UnstyledButton,
-  TextInput,
 } from "@mantine/core";
 import { useState } from "react";
 import { GroupItemType } from "../../../components/Type";
-import { UAModal } from "../../../components/UAModal";
 import { useDisclosure } from "@mantine/hooks";
+import { GroupModal } from "./GroupModal";
 
 // 所属グループの表示
 type GroupItemProps = {
@@ -42,35 +41,21 @@ const GroupItem: React.FC<GroupItemProps> = ({ items }) => {
   );
 };
 
-// グループの操作に関するモーダル
-type GroupModalProps = {
-  opend: boolean,
-  close: () => void
-}
-const GroupModal: React.FC<GroupModalProps> = ({opend, close}) => {
-  return (
-    <UAModal title="グループの新規作成" opened={opend} close={close}>
-      <TextInput label="グループ名" />
-    </UAModal>
-  )
-}
-
 export const Group: React.FC = () => {
-  const [group, setGroup] = useState<GroupItemType[]>([
-    { name: "Name is A" },
-    { name: "Name is B" },
-    { name: "Name is C" },
-    { name: "Name is D" },
-    { name: "Name is E" },
-  ]);
+  const [group, setGroup] = useState<GroupItemType[]>([]);
+  const createGroup = (name: string) => {
+    setGroup((prevItems) => {
+      return [...prevItems, {name: name}];
+    });
+  };
 
-  const [opend, {open, close}] = useDisclosure(false)
+  const [opend, { open, close }] = useDisclosure(false);
 
   return (
     <Stack>
-      <GroupModal opend={opend} close={close}/>
+      <GroupModal opend={opend} close={close} createGroup={createGroup} />
       <Flex justify={"flex-start"} align={"end"} gap={"sm"}>
-        <Text size={"lg"}>グループ</Text>
+        <Text size={"lg"}>所属しているグループ</Text>
         <UnstyledButton style={{ marginLeft: "auto" }} onClick={open}>
           <Paper withBorder radius={10} p={5} color="undefined">
             <Text p={5}>新しいグループを作成</Text>
