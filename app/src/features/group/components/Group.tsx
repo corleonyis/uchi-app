@@ -11,16 +11,31 @@ import { useState } from "react";
 import { GroupItemType } from "../../../components/Type";
 import { useDisclosure } from "@mantine/hooks";
 import { GroupModal } from "./GroupModal";
+import { useAuthContext } from "../../auth/components/Auth";
+import { AiOutlineEdit } from "react-icons/ai";
 
 // 所属グループの表示
 type GroupItemProps = {
   items: GroupItemType[];
 };
 const GroupItem: React.FC<GroupItemProps> = ({ items }) => {
+  const { currentUser } = useAuthContext();
   const element = items.map((item, index) => (
-    <Paper key={index} shadow="xs" withBorder radius={10} p={"xl"}>
-      <Text>{item.name}</Text>
-    </Paper>
+    <UnstyledButton>
+      <Paper key={index} shadow="xs" withBorder radius={10} p={"sm"}>
+        <Flex justify={"flex-start"} align={"start"}>
+          <Text>{item.name}</Text>
+          {item.owner.id === currentUser?.uid ? (
+            <AiOutlineEdit style={{ marginLeft: "auto" }} />
+          ) : (
+            <></>
+          )}
+        </Flex>
+        <Flex justify={"flex-end"} align={"end"}>
+          <Text size={"sm"}>作成者: {item.owner.name || "不明"}</Text>
+        </Flex>
+      </Paper>
+    </UnstyledButton>
   ));
 
   return items.length > 0 ? (
@@ -42,10 +57,18 @@ const GroupItem: React.FC<GroupItemProps> = ({ items }) => {
 };
 
 export const Group: React.FC = () => {
+  const { currentUser } = useAuthContext();
   const [group, setGroup] = useState<GroupItemType[]>([]);
   const createGroup = (name: string) => {
     setGroup((prevItems) => {
-      return [...prevItems, {name: name}];
+      return [
+        ...prevItems,
+        {
+          name: name,
+          owner: { name: currentUser?.displayName, id: currentUser?.uid },
+          member: [],
+        },
+      ];
     });
   };
 
