@@ -2,8 +2,32 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    function isAuthenticated() {
+      return request.auth != null
+    }
+
+    function isUserAuthenticated(userId) {
+      return isAuthenticated() && userId == request.auth.uid
+    }
+
+    function isValidUser(user) {
+      return user.size() == 5
+        && 'id' in user && user.id is string
+        && 'name' in user && user.name is string
+        && 'photoURL' in user && user.photoURL is string
+        && 'created_at' in user && user.created_at is timestamp
+        && 'groupes' in user && user.groupes is list
+    }
+    // match /{document=**} {
+    //   allow read, write: if false;
+    // }
+    // ルールの記述
+    match /users/{userId} {
+      allow get: if isUserAuthenticated(userId)
+      allow create: if isUserAuthenticated(userId)
+        && isValidUser(request.resource.data)
+        && request.resource.data.created_at == request.time
+        && request.resource.data.id == userId
     }
   }
 }

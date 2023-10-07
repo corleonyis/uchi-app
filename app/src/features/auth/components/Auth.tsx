@@ -9,6 +9,7 @@ import { createContext, useContext, useLayoutEffect, useState } from "react";
 import auth, { provider } from "../../firebase/firebase";
 import { NavigateFunction } from "react-router-dom";
 import { routesConfig } from "../../../routes/RouteConfig";
+import { createUser } from "../../database/components/Database";
 
 type AuthContextType = {
   currentUser: User | null;
@@ -55,7 +56,10 @@ export const login = (navigate: NavigateFunction) => {
           // const credential = GoogleAuthProvider.credentialFromResult(result);
           // const token = credential?.accessToken;
           // The signed-in user info.
-          navigate(routesConfig.home.href);
+          const user = result.user;
+          createUser(user.uid, user.displayName, user.photoURL, () => {
+            navigate(routesConfig.home.href);
+          });
         })
         .catch((error) => {
           console.log(error);
