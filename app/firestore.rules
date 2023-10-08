@@ -10,17 +10,25 @@ service cloud.firestore {
       return isAuthenticated() && userId == request.auth.uid
     }
 
+		// ユーザー
     function isValidUser(user) {
       return user.size() == 5
         && 'id' in user && user.id is string
         && 'name' in user && user.name is string
         && 'photoURL' in user && user.photoURL is string
         && 'created_at' in user && user.created_at is timestamp
-        && 'groupes' in user && user.groupes is list
+        && 'groups' in user && user.groups is list
     }
-    // match /{document=**} {
-    //   allow read, write: if false;
-    // }
+    
+    // グループ    
+    function isValidGroup(group) {
+    	return group.size() == 4
+        && 'name' in group && group.name is string
+        && 'created_at' in group && group.created_at is timestamp
+        && 'owner' in group && group.owner is map
+        && 'members' in group && group.members is list
+    }
+    
     // ルールの記述
     match /users/{userId} {
       allow get: if isUserAuthenticated(userId)
@@ -28,6 +36,17 @@ service cloud.firestore {
         && isValidUser(request.resource.data)
         && request.resource.data.created_at == request.time
         && request.resource.data.id == userId
+    }
+    
+    match /groups/{groupId} {
+    	allow read: if isAuthenticated()
+      allow create: if isAuthenticated()
+      	&& isValidGroup(request.resource.data)
+        && request.resource.data.created_at == request.time
+        && request.resource.data.owner.id == request.auth.uid
+      allow update: if isAuthenticated()
+      	&& isValidGroup(request.resource.data)
+        && request.resource.data.owner.id == request.auth.uid
     }
   }
 }

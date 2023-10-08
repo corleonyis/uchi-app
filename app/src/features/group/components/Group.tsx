@@ -13,6 +13,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { GroupModal } from "./GroupModal";
 import { useAuthContext } from "../../auth/components/Auth";
 import { AiOutlineEdit } from "react-icons/ai";
+import { createGroup as addGroup } from "../../database/components/Database";
 
 // 所属グループの表示
 type GroupItemProps = {
@@ -21,8 +22,8 @@ type GroupItemProps = {
 const GroupItem: React.FC<GroupItemProps> = ({ items }) => {
   const { currentUser } = useAuthContext();
   const element = items.map((item, index) => (
-    <UnstyledButton>
-      <Paper key={index} shadow="xs" withBorder radius={10} p={"sm"}>
+    <UnstyledButton key={index} >
+      <Paper shadow="xs" withBorder radius={10} p={"sm"}>
         <Flex justify={"flex-start"} align={"start"}>
           <Text>{item.name}</Text>
           {item.owner.id === currentUser?.id ? (
@@ -60,6 +61,9 @@ export const Group: React.FC = () => {
   const { currentUser } = useAuthContext();
   const [group, setGroup] = useState<GroupItemType[]>([]);
   const createGroup = (name: string) => {
+    if(currentUser !== null){
+      addGroup(name, currentUser?.id, currentUser?.name)
+    }
     setGroup((prevItems) => {
       return [
         ...prevItems,

@@ -1,4 +1,11 @@
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { UserType } from "../../../components/Type";
 
@@ -11,16 +18,16 @@ export const createUser = async (
   callback: () => void
 ) => {
   try {
-    const docSnap = await getDoc(doc(db, "users", id))
-    if(!docSnap.exists()){
-      console.log("crateUser: ", docSnap.data())
+    const docSnap = await getDoc(doc(db, "users", id));
+    if (!docSnap.exists()) {
+      console.log("crateUser: ", docSnap.data());
       await setDoc(doc(db, "users", id), {
         id: id,
         name: name,
         photoURL: photoUrl,
         created_at: serverTimestamp(),
-        groupes: [],
-      });  
+        groups: [],
+      });
     }
     callback();
   } catch (error) {
@@ -32,15 +39,33 @@ export const createUser = async (
 export const getUser = async (id: string) => {
   try {
     const docSnap = await getDoc(doc(db, "users", id));
-    if(docSnap.exists()){
-      console.log(docSnap.data())
-      return docSnap.data() as UserType
-    }else{
-      console.log("No such document")
-    }  
-  } catch (error){
+    if (docSnap.exists()) {
+      console.log(docSnap.data());
+      return docSnap.data() as UserType;
+    } else {
+      console.log("No such document");
+    }
+  } catch (error) {
     console.log("getUser: ", error);
   }
 
-  return null
+  return null;
+};
+
+// グループ作成
+export const createGroup = async (
+  name: string,
+  owner_id: string | undefined,
+  owner_name: string | null | undefined
+) => {
+  try {
+    await addDoc(collection(db, "groups"), {
+      name: name,
+      created_at: serverTimestamp(),
+      owner: { id: owner_id, name: owner_name },
+      members: [],
+    });
+  } catch (error) {
+    console.log("createGroup: ", error);
+  }
 };
