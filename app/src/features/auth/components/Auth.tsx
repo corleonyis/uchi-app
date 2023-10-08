@@ -1,5 +1,4 @@
 import {
-  User,
   browserLocalPersistence,
   onAuthStateChanged,
   setPersistence,
@@ -9,10 +8,11 @@ import { createContext, useContext, useLayoutEffect, useState } from "react";
 import auth, { provider } from "../../firebase/firebase";
 import { NavigateFunction } from "react-router-dom";
 import { routesConfig } from "../../../routes/RouteConfig";
-import { createUser } from "../../database/components/Database";
+import { createUser, getUser } from "../../database/components/Database";
+import { UserType } from "../../../components/Type";
 
 type AuthContextType = {
-  currentUser: User | null;
+  currentUser: UserType | null;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -26,12 +26,16 @@ type AuthProviderProps = {
   children: React.ReactNode;
 };
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
-    return onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+    return onAuthStateChanged(auth, async (user) => {
+      if (user !== null) {
+        setCurrentUser(await getUser(user.uid));
+      } else {
+        setCurrentUser(null);
+      }
       setLoading(false);
     });
   }, []);

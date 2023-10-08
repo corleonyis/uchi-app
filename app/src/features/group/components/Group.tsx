@@ -25,7 +25,7 @@ const GroupItem: React.FC<GroupItemProps> = ({ items }) => {
       <Paper key={index} shadow="xs" withBorder radius={10} p={"sm"}>
         <Flex justify={"flex-start"} align={"start"}>
           <Text>{item.name}</Text>
-          {item.owner.id === currentUser?.uid ? (
+          {item.owner.id === currentUser?.id ? (
             <AiOutlineEdit style={{ marginLeft: "auto" }} />
           ) : (
             <></>
@@ -65,7 +65,7 @@ export const Group: React.FC = () => {
         ...prevItems,
         {
           name: name,
-          owner: { name: currentUser?.displayName, id: currentUser?.uid },
+          owner: { name: currentUser?.name, id: currentUser?.id },
           member: [],
         },
       ];
