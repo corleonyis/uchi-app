@@ -35,15 +35,15 @@ export const Group: React.FC = () => {
         });
     }
     return () => {
-      setRequest(true);
+      setRequest(false);
     };
-  }, []);
+  }, [request]);
 
   // グループ作成
   const createGroup = (name: string) => {
     if (currentUser !== null && name !== "") {
       addGroup(name, currentUser?.id, currentUser?.name);
-      setRequest(false);
+      setRequest(true);
     }
   };
 
