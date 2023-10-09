@@ -25,7 +25,7 @@ export const Group: React.FC = () => {
   // グループ取得
   useEffect(() => {
     if (request) {
-      console.log("getGroup");
+      console.log("useEffect")
       getGroups(currentUser?.id as string, currentUser?.name as string)
         .then((docs) => {
           setGroup(docs);
@@ -37,7 +37,7 @@ export const Group: React.FC = () => {
     return () => {
       setRequest(false);
     };
-  }, [request]);
+  }, [request, currentUser?.id, currentUser?.name]);
 
   // グループ作成
   const createGroup = (name: string) => {
