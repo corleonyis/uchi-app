@@ -1,5 +1,4 @@
 import {
-  User,
   browserLocalPersistence,
   onAuthStateChanged,
   setPersistence,
@@ -8,10 +7,12 @@ import {
 import { createContext, useContext, useLayoutEffect, useState } from "react";
 import auth, { provider } from "../../firebase/firebase";
 import { NavigateFunction } from "react-router-dom";
-import { routesConfig } from "../../list/components/RouteConfig";
+import { routesConfig } from "../../../routes/RouteConfig";
+import { createUser, getUser } from "../../database/components/Database";
+import { UserType } from "../../../components/Type";
 
 type AuthContextType = {
-  currentUser: User | null;
+  currentUser: UserType | null;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -25,12 +26,16 @@ type AuthProviderProps = {
   children: React.ReactNode;
 };
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
-    return onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+    return onAuthStateChanged(auth, async (user) => {
+      if (user !== null) {
+        setCurrentUser(await getUser(user.uid));
+      } else {
+        setCurrentUser(null);
+      }
       setLoading(false);
     });
   }, []);
@@ -55,7 +60,10 @@ export const login = (navigate: NavigateFunction) => {
           // const credential = GoogleAuthProvider.credentialFromResult(result);
           // const token = credential?.accessToken;
           // The signed-in user info.
-          navigate(routesConfig.home.href);
+          const user = result.user;
+          createUser(user.uid, user.displayName, user.photoURL, () => {
+            navigate(routesConfig.home.href);
+          });
         })
         .catch((error) => {
           console.log(error);

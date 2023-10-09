@@ -9,9 +9,9 @@ import {
   TextInput,
   Button,
 } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { UAListItem } from "../components/UAList";
 import { ShoppingListType } from "../components/Type";
-import { useDisclosure } from "@mantine/hooks";
 import { UAModal } from "../components/UAModal";
 
 export const ShoppingList: React.FC = () => {

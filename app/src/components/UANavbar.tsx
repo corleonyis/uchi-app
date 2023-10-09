@@ -11,8 +11,8 @@ import {
 } from "@mantine/core";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext, logout } from "../../auth/components/Auth";
-import { routesConfig } from "./RouteConfig";
+import { routesConfig } from "../routes/RouteConfig";
+import { useAuthContext, logout } from "../features/auth/components/Auth";
 
 type Props = {
   hidden: boolean;
@@ -23,6 +23,7 @@ const menu = [
   routesConfig.home,
   routesConfig.buy_list,
   routesConfig.stock,
+  routesConfig.group,
   routesConfig.settings,
 ];
 
@@ -34,6 +35,7 @@ export const UANavbar: React.FC<Props> = ({ hidden }) => {
   const menuItems = menu.map((item, index) => {
     return (
       <UnstyledButton
+        key={index}
         p={10}
         onClick={() => {
           navigate(item.href);
@@ -72,7 +74,9 @@ export const UANavbar: React.FC<Props> = ({ hidden }) => {
           >
             <Flex justify={"flex-start"} align={"center"} gap={"md"}>
               <Avatar src={currentUser?.photoURL} radius="xl" />
-              <Text lineClamp={1} size={"sm"}>{currentUser?.displayName}</Text>
+              <Text lineClamp={1} size={"sm"}>
+                {currentUser?.name}
+              </Text>
               <AiOutlineEllipsis style={{ marginLeft: "auto" }} size={24} />
             </Flex>
           </UnstyledButton>

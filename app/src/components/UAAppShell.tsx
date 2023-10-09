@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { AppShell, ScrollArea, useMantineTheme } from "@mantine/core";
 import { UANavbar } from "./UANavbar";
 import { UAHeader } from "./UAHeader";
-import { useAuthContext } from "../../auth/components/Auth";
+import { useAuthContext } from "../features/auth/components/Auth";
 import { Navigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { routesConfig } from "./RouteConfig";
+import { routesConfig } from "../routes/RouteConfig";
 
 export const UAAppShell: React.FC = () => {
   const { currentUser } = useAuthContext();
