@@ -23,6 +23,7 @@ const menu = [
   routesConfig.home,
   routesConfig.buy_list,
   routesConfig.stock,
+  routesConfig.group,
   routesConfig.settings,
 ];
 

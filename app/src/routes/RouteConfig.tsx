@@ -3,12 +3,14 @@ import {
   AiOutlineShopping,
   AiOutlineInbox,
   AiOutlineSetting,
+  AiOutlineTeam,
 } from "react-icons/ai";
 import { Login } from "../features/auth/routes/Login";
 import { Home } from "./Home";
 import { Settings } from "./Settings";
 import { ShoppingList } from "./ShoppingList";
 import { StockList } from "./StockList";
+import { Group } from "../features/group/routes/Group";
 
 export const routesConfig = {
   login: { text: "ログイン", href: "/login", icon: null, element: <Login /> },
@@ -29,6 +31,12 @@ export const routesConfig = {
     href: "/stock",
     icon: <AiOutlineInbox size={24} />,
     element: <StockList />,
+  },
+  group: {
+    text: "グループ",
+    href: "/group",
+    icon: <AiOutlineTeam size={24} />,
+    element: <Group />,
   },
   settings: {
     text: "設定",

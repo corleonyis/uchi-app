@@ -26,6 +26,10 @@ export const AppRouter: React.FC = () => {
             element={routesConfig.stock.element}
           />
           <Route
+            path={routesConfig.group.href}
+            element={routesConfig.group.element}
+          />
+          <Route
             path={routesConfig.settings.href}
             element={routesConfig.settings.element}
           />
