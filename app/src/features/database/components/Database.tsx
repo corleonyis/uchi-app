@@ -3,11 +3,14 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
+  query,
   serverTimestamp,
   setDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
-import { UserType } from "../../../components/Type";
+import { GroupItemType, UserType } from "../../../components/Type";
 
 // ユーザー
 // ユーザー作成
@@ -26,7 +29,6 @@ export const createUser = async (
         name: name,
         photoURL: photoUrl,
         created_at: serverTimestamp(),
-        groups: [],
       });
     }
     callback();
@@ -63,9 +65,20 @@ export const createGroup = async (
       name: name,
       created_at: serverTimestamp(),
       owner: { id: owner_id, name: owner_name },
-      members: [],
+      members: [{ id: owner_id, name: owner_name }],
     });
   } catch (error) {
     console.log("createGroup: ", error);
   }
+};
+
+export const getGroups = async (userId: string, userName: string) => {
+  return (
+    await getDocs(
+      query(
+        collection(db, "groups"),
+        where("members", "array-contains", { id: userId, name: userName })
+      )
+    )
+  ).docs.map((doc) => doc.data()) as GroupItemType[];
 };

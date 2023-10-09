@@ -11,7 +11,6 @@ export type UserType = {
   name: string | null;
   photoURL: string | null;
   created_at: Timestamp;
-  groupes: [];
 };
 
 export type SimpleUserType = {
@@ -20,7 +19,8 @@ export type SimpleUserType = {
 };
 
 export type GroupItemType = {
+  id: string;
   name: string;
   owner: SimpleUserType;
-  member: SimpleUserType[];
+  members: SimpleUserType[];
 };

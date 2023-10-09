@@ -7,13 +7,16 @@ import {
   Divider,
   UnstyledButton,
 } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GroupItemType } from "../../../components/Type";
 import { useDisclosure } from "@mantine/hooks";
 import { GroupModal } from "./GroupModal";
 import { useAuthContext } from "../../auth/components/Auth";
 import { AiOutlineEdit } from "react-icons/ai";
-import { createGroup as addGroup } from "../../database/components/Database";
+import {
+  createGroup as addGroup,
+  getGroups,
+} from "../../database/components/Database";
 
 // 所属グループの表示
 type GroupItemProps = {
@@ -22,7 +25,7 @@ type GroupItemProps = {
 const GroupItem: React.FC<GroupItemProps> = ({ items }) => {
   const { currentUser } = useAuthContext();
   const element = items.map((item, index) => (
-    <UnstyledButton key={index} >
+    <UnstyledButton key={index}>
       <Paper shadow="xs" withBorder radius={10} p={"sm"}>
         <Flex justify={"flex-start"} align={"start"}>
           <Text>{item.name}</Text>
@@ -60,22 +63,33 @@ const GroupItem: React.FC<GroupItemProps> = ({ items }) => {
 export const Group: React.FC = () => {
   const { currentUser } = useAuthContext();
   const [group, setGroup] = useState<GroupItemType[]>([]);
-  const createGroup = (name: string) => {
-    if(currentUser !== null){
-      addGroup(name, currentUser?.id, currentUser?.name)
+  const [request, setRequest] = useState(true);
+
+  // グループ取得
+  useEffect(() => {
+    if (request) {
+      getGroups(currentUser?.id as string, currentUser?.name as string)
+        .then((docs) => {
+          setGroup(docs);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    setGroup((prevItems) => {
-      return [
-        ...prevItems,
-        {
-          name: name,
-          owner: { name: currentUser?.name, id: currentUser?.id },
-          member: [],
-        },
-      ];
-    });
+    return () => {
+      setRequest(true);
+    };
+  }, [request]);
+
+  // グループ作成
+  const createGroup = (name: string) => {
+    if (currentUser !== null) {
+      addGroup(name, currentUser?.id, currentUser?.name);
+      setRequest(false);
+    }
   };
 
+  // Modal
   const [opend, { open, close }] = useDisclosure(false);
 
   return (

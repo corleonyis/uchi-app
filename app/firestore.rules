@@ -12,12 +12,11 @@ service cloud.firestore {
 
 		// ユーザー
     function isValidUser(user) {
-      return user.size() == 5
+      return user.size() == 4
         && 'id' in user && user.id is string
         && 'name' in user && user.name is string
         && 'photoURL' in user && user.photoURL is string
         && 'created_at' in user && user.created_at is timestamp
-        && 'groups' in user && user.groups is list
     }
     
     // グループ    
