@@ -8,11 +8,13 @@ import {
   Flex,
   UnstyledButton,
   Stack,
+  Select,
 } from "@mantine/core";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { routesConfig } from "../routes/RouteConfig";
 import { useAuthContext, logout } from "../features/auth/components/Auth";
+import { useGroupContext } from "../features/group/components/GroupProvider";
 
 type Props = {
   hidden: boolean;
@@ -31,7 +33,9 @@ export const UANavbar: React.FC<Props> = ({ hidden }) => {
   // navigate
   const navigate = useNavigate();
   const { currentUser } = useAuthContext();
+  const { nameList, selectedName, setSelectedName } = useGroupContext();
 
+  // Navbarのメニューアイテムを生成
   const menuItems = menu.map((item, index) => {
     return (
       <UnstyledButton
@@ -58,7 +62,18 @@ export const UANavbar: React.FC<Props> = ({ hidden }) => {
     >
       {/* Navbar Contents */}
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
-        <Stack>{menuItems}</Stack>
+        <Stack>
+          <Select
+            label="表示中のグループ"
+            placeholder="グループを選択してください"
+            data={nameList}
+            defaultValue={selectedName}
+            allowDeselect={false}
+            value={selectedName}
+            onChange={setSelectedName}
+          />
+          {menuItems}
+        </Stack>
       </Navbar.Section>
 
       <Divider my="sm" />
