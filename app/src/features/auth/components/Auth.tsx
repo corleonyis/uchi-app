@@ -10,6 +10,7 @@ import { NavigateFunction } from "react-router-dom";
 import { routesConfig } from "../../../routes/RouteConfig";
 import { createUser, getUser } from "../../database/components/Database";
 import { UserType } from "../../../components/Type";
+import { GroupProvider } from "../../group/components/GroupProvider";
 
 type AuthContextType = {
   currentUser: UserType | null;
@@ -46,7 +47,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      <GroupProvider>
+        {!loading && children}
+      </GroupProvider>
     </AuthContext.Provider>
   );
 };

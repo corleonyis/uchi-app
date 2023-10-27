@@ -33,8 +33,8 @@ export const routesConfig = {
     element: <StockList />,
   },
   group: {
-    text: "グループ",
-    href: "/group",
+    text: "メンバー",
+    href: "/members",
     icon: <AiOutlineTeam size={24} />,
     element: <Group />,
   },
