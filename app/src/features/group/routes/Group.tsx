@@ -1,13 +1,13 @@
 import {
   Stack,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 
+// TODO: 一旦メンバー一覧ページとして残しておく。
 export const Group: React.FC = () => {
 
 
   // Modal
-  const [opend, { open, close }] = useDisclosure(false);
+  // const [opend, { open, close }] = useDisclosure(false);
 
   return (
     <Stack>
