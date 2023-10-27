@@ -33,7 +33,7 @@ export const UANavbar: React.FC<Props> = ({ hidden }) => {
   // navigate
   const navigate = useNavigate();
   const { currentUser } = useAuthContext();
-  const { nameList, selectedName, setSelectedName } = useGroupContext();
+  const { nameList, selectedName, onSelectedName } = useGroupContext();
 
   // Navbarのメニューアイテムを生成
   const menuItems = menu.map((item, index) => {
@@ -70,7 +70,7 @@ export const UANavbar: React.FC<Props> = ({ hidden }) => {
             defaultValue={selectedName}
             allowDeselect={false}
             value={selectedName}
-            onChange={setSelectedName}
+            onChange={onSelectedName}
           />
           {menuItems}
         </Stack>
